@@ -1,0 +1,51 @@
+// Question 6.1
+// I did this but the program crashed and it took ages to type 
+// I'm not doing it again
+// It's cool it was simple
+
+// Question 6.2
+
+/*
+const N = 5
+PHIL = (sitdown->right.get->left.get
+          ->eat->left.put->right.put
+          ->arise->PHIL).
+
+FORK = (get -> put -> FORK).
+
+BUTLER = BUTLER[0],
+BUTLER[count:0..N] = 	(when (count < N-1) phil[0..N-1].sitdown -> BUTLER[count+1]
+						|when(count > 0) phil[0..N-1].arise -> BUTLER[count-1]
+						).
+
+||DINERS(N=5)= 
+   forall [i:0..N-1] 
+   (phil[i]:PHIL 
+   ||{phil[i].left,phil[((i-1)+N)%N].right}::FORK
+	|| BUTLER).
+
+menu RUN = {phil[0..4].{sitdown,eat}}
+*/ 
+
+
+// Question 6.3
+// Java
+
+//Question 6.4
+
+// Deadlocked because each person has to wait for another to execute (cond 4)
+ 
+Alice = (call.bob -> wait.chris -> Alice).
+Bob = (call.chris -> wait.alice -> Bob).
+Chris = (call.alice -> wait.bob -> Chris).
+||S = (Alice || Bob || Chris) /{call/wait}.
+
+
+// Not deadlocked because removes condition 2
+Alice2 = (call.bob -> wait.chris -> Alice2
+| timeout.alice -> wait.chris ->Alice2).
+Bob2 = (call.chris -> wait.alice -> Bob2
+| timeout.bob -> wait.alice ->Bob2).
+Chris2 = (call.alice -> wait.bob -> Chris2
+| timeout.chris -> wait.bob ->Chris2).
+||S2 = (Alice2 || Bob2 || Chris2) /{call/wait}.
